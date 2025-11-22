@@ -5,7 +5,8 @@ export const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
-    const [loading, setLoading] = useState(true); // prevent flicker on refresh
+    // const [loading, setLoading] = useState(true); // prevent flicker on refresh
+    const [initializing, setInitializing] = useState(true);
 
   // Keep user logged in using localStorage
     useEffect(() => {
@@ -13,7 +14,8 @@ export function AuthProvider({ children }) {
         if (savedUser) {
             setUser(JSON.parse(savedUser));
         }
-        setLoading(false);
+        // setLoading(false);
+        setInitializing(false);
     }, []);
 
     const loginUser = (userData) => {
@@ -23,26 +25,69 @@ export function AuthProvider({ children }) {
 
     const login = async (credentials) => {
         try {
+            // setLoading(true);
             const res = await loginAPI(credentials);
-            loginUser(res.data.data);
+            const userData = res.data?.data;
+            setUser(userData);
             return { success: true };
         } catch (err) {
-            return {
-                success: false,
-                message: err.response?.data?.message || "Login failed",
-            };
+            let message = "Login failed";
+            if (err.response?.data) {
+                // backend may return: { message: "..."} OR field errors
+                if (typeof err.response.data === "string") {
+                    message = err.response.data;
+                } else if (err.response.data.message) {
+                    message = err.response.data.message;
+                } else {
+                  // collect field errors (job_title, team_size...)
+                    message = Object.values(err.response.data).flat().join("\n");
+                }
+            }
+            return { success: false, message };
+            // return {
+            //     success: false,
+            //     message: err.response?.data?.message || err.response?.data?.error || JSON.stringify(err.response?.data) || "Login failed",
+            // };
+        }finally{
+            // setLoading(false);
         }
     };
 
+    // const signup = async (formData) => {
+    //     try {
+    //         setLoading(true);
+    //         const res = await signupAPI(formData);
+    //         return { success: true, data: res.data };
+    //     } catch (err) {
+    //         return {
+    //             success: false,
+    //             message: err.response?.data?.message || "Signup failed",
+    //         };
+    //     }finally{
+    //         setLoading(false);
+    //     }
+    // };
+
     const signup = async (formData) => {
         try {
+            // setLoading(true);
             const res = await signupAPI(formData);
             return { success: true, data: res.data };
         } catch (err) {
-            return {
-                success: false,
-                message: err.response?.data?.message || "Signup failed",
-            };
+            let message = "Signup failed";
+            if (err.response?.data) {
+                if (typeof err.response.data === "string") {
+                    message = err.response.data;
+                } else if (err.response.data.message) {
+                    message = err.response.data.message;
+                } else {
+                    // collect field errors (e.g. { password: ["..."], email: ["..."] })
+                    message = Object.values(err.response.data).flat().join("\n");
+                }
+            }
+            return { success: false, message };
+        } finally {
+            // setLoading(false);
         }
     };
 
@@ -56,8 +101,11 @@ export function AuthProvider({ children }) {
     };
 
 return (
-    <AuthContext.Provider value={{ user, loading, login, signup, logout }}>
-        {!loading && children}
+    // <AuthContext.Provider value={{ user, loading, login, signup, logout, loginUser }}>
+    //     {!loading && children}
+    <AuthContext.Provider value={{ user, initializing, login, signup, logout, loginUser }}>
+        {!initializing && children}
     </AuthContext.Provider>
+    // </AuthContext.Provider>
 );
 }
