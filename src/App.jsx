@@ -5,7 +5,7 @@ import Signup from "./pages/auth/Signup.jsx";
 import Login from "./pages/auth/Login.jsx";
 import Dashboard from "./pages/dashboard/Dashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
-import PublicHeader from "./components/PublicHeader.jsx";
+import PublicLayout from "./layouts/PublicLayout.jsx";
 import LandingLayout from "./layouts/LandingLayout.jsx";
 import Landing from "./pages/landing/Landing.jsx";
 
@@ -20,7 +20,7 @@ export default function App() {
           </Route>
 
           {/* Public Pages */}
-          <Route element={<PublicHeader />}>
+          <Route element={<PublicLayout />}>
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
           </Route>

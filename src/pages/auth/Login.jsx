@@ -3,6 +3,8 @@ import React, { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../../context/AuthContext";
 import {Link, useNavigate } from "react-router-dom";
 import {AiFillEye,AiFillEyeInvisible} from 'react-icons/ai'
+import { FcGoogle } from "react-icons/fc";
+import { AiFillGithub } from "react-icons/ai";
 import {toast} from "react-toastify";
 import Cover from '../../assets/Cover.png';
 
@@ -60,28 +62,34 @@ export default function Login() {
     };
 
 return (
-    <main className='flex flex-row-reverse h-full bg-cover w-full bg-no-repeat' style={{backgroundImage: `url(${Cover})`}}>
-        <div className='bg-white p-10 rounded-l-3xl w-[50%] flex justify-center'>
-            <form onSubmit={handleLogin} className='flex flex-col gap-2 w-[540px] h-[440px] shadow-xl rounded-md p-10 mt-10'>
-                <h1 className='text-3xl font-semibold'>Login</h1>
+    <main className='flex h-screen w-full p-10 pt-4 overflow-hidden'>
+            <form onSubmit={handleLogin} className='m-10 mt-10 flex flex-col w-full items-start'>
+                <h1 className='text-3xl font-semibold mb-5 font-fraunces'>Login</h1>
                 <label htmlFor="email" className='text-gray-600 mt-4'>Email</label>
-                <input placeholder="Enter your email" value={email} onChange={(e) => setEmail(e.target.value)} className='border p-3 rounded-md text-sm'/>
-                <div className='flex justify-between mt-4'>
+                <input placeholder="Enter your email here" value={email} onChange={(e) => setEmail(e.target.value)} className='border p-3 rounded-md text-sm w-full'/>
+                <div className='flex justify-between mt-11 w-full'>
                     <label htmlFor="password" className='text-gray-600'>Password</label>
-                    <Link to='/' className='text-[#00B5D8]'>Forgot Password ?</Link>
+                    <Link to='/' className='text-[#1B365D] text-sm'>Forgot Password ?</Link>
                 </div>
-                <div className='relative'>
+                <div className='relative w-full'>
                     <input  placeholder="Enter your password" type={showPassword? 'text': 'password'} value={password} onChange={(e) => setPassword(e.target.value)} className='border p-3 rounded-md text-sm w-full transition ease-in-out'/>
                     {showPassword?(<AiFillEyeInvisible onClick={()=>setShowPassword(!showPassword)} className='absolute right-3 top-3 text-xl cursor-pointer'/>):
                     (<AiFillEye onClick={()=>setShowPassword(!showPassword)} className='absolute right-3 top-3 text-xl cursor-pointer'/>)}
                 </div>
-                <button className='bg-[#2161F6] text-[16px] mt-6 text-white p-3 rounded-md'>Login now</button>
-                <span className='text-gray-400 text-lg text-center mt-2'>Don't Have An Account? 
-                    <Link to='/signup' className='ms-3 text-[#00B5D8]'>
+                <button className='bg-[#1B365D] text-[16px] mt-10 text-white p-2 rounded-md w-[200px] mx-auto'>Log in</button>
+                <span className='text-gray-400 text-sm text-center mt-2 mx-auto'>Don't Have An Account? 
+                    <Link to='/signup' className='ms-1 text-[#1B365D]'>
                         Sign Up
-                    </Link></span>
+                    </Link>
+                </span>
+                <p className="mx-auto text-gray-400 font-semibold mt-6 mb-4">- OR -</p>
+                <section className="flex gap-3 mx-auto">
+                    <button className="border border-gray-400 p-2 rounded-lg text-gray-400 text-sm flex items-center">
+                        <FcGoogle className="text-2xl" />Sign up with Google</button>
+                    <button className="border border-gray-400 p-2 rounded-lg text-gray-400 text-sm flex items-center">
+                        <AiFillGithub className="text-2xl" />Sign up with GitHub</button>
+                </section>
         </form>
-        </div>
     </main>
 );
 }
