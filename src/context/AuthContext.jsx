@@ -21,15 +21,30 @@ export function AuthProvider({ children }) {
     const loginUser = (userData) => {
         setUser(userData);
         localStorage.setItem("cyclunoUser", JSON.stringify(userData));
+        console.log("Saved to localStorage:", JSON.parse(localStorage.getItem("cyclunoUser")));
     };
 
     const login = async (credentials) => {
         try {
             // setLoading(true);
+            // const res = await loginAPI(credentials);
+            // const userData = res.data?.data;
+            // setUser(userData);
+            // return { success: true };
             const res = await loginAPI(credentials);
-            const userData = res.data?.data;
-            setUser(userData);
-            return { success: true };
+            
+            // return the api response so callers can access res.data (email/user)
+            const payload = res?.data?.result || res?.data;
+            
+            if (payload) {
+                loginUser(payload)
+                console.log("After login, saved to localStorage:", JSON.parse(localStorage.getItem("cyclunoUser")));
+            }
+            // if payload contains a user object, set it in context
+            // const userData = payload?.data ?? payload?.user ?? (typeof payload === 'string' ? { email: payload } : payload) ?? null;
+            // if (userData) setUser(userData);
+            return { success: true, data: payload };
+
         } catch (err) {
             let message = "Login failed";
             if (err.response?.data) {

@@ -6,7 +6,6 @@ import { FcGoogle } from "react-icons/fc";
 import { AiFillGithub } from "react-icons/ai";
 import {Link, useNavigate } from "react-router-dom";
 import Spinner from "../../components/Spinner";
-import Cover from '../../assets/Cover.png';
 
 export default function Signup() {
     const { signup, loginUser } = useContext(AuthContext);
@@ -44,8 +43,8 @@ export default function Signup() {
             }
             const newUser = res.data?.data || res.data;
             if (newUser) loginUser(newUser);
-            toast.success("Signup Successful");
-            navigate("/dashboard");
+            toast.success("Signup Successful, check your email for verification link!");
+            navigate("/login");
         } catch (error) {
             // extract axios/server error safely
             const errMsg =
@@ -78,7 +77,7 @@ return (
                 onChange={(e) => setForm({ ...form, company_name: e.target.value })} className="border p-3 rounded-md text-sm bg-gray-200 w-full"/>
 
                 <label className="text-gray-500 mt-4 text-sm" htmlFor="job title">Job Title</label>
-                <select value={form.job_title} onChange={(e) => setForm({...form, job_title: e.target.value})} required className="border p-3 rounded-md bg-gray-200 w-full text-gray-500 text-sm">
+                <select value={form.job_title} onChange={(e) => setForm({...form, job_title: e.target.value})} required className="appearance-none border p-3 rounded-md bg-gray-200 w-full text-gray-500 text-sm">
                     <option value="">Enter your Job Title here</option>
                     <option value="Developer">Developer</option>
                     <option value="Product Manager">Product Manager</option>
@@ -90,7 +89,7 @@ return (
                 </select>
 
                 <label className="text-gray-500 mt-4 text-sm" htmlFor="team size">User Size</label>
-                <select value={form.team_size} onChange={(e) => setForm({...form, team_size: e.target.value})} required className="border p-3 rounded-md bg-gray-200 w-full text-gray-500 text-sm">
+                <select value={form.team_size} onChange={(e) => setForm({...form, team_size: e.target.value})} required className="appearance-none border p-3 rounded-md bg-gray-200 w-full text-gray-500 text-sm">
                     <option value="">Enter your User Size here</option>
                     <option value="1-10">1-10</option>
                     <option value="11-50">11-50</option>
@@ -118,7 +117,7 @@ return (
                     (<AiFillEye onClick={()=>setShowPassword1(!showPassword1)} className='absolute right-3 top-3 text-xl cursor-pointer'/>)}
                 </div>
 
-        <button className='bg-[#1B365D] text-[16px] mt-6 text-white p-2 rounded-md w-[200px] mx-auto'>Create Account</button>
+        <button className='bg-[#1B365D] text-[16px] mt-6 text-white p-2 rounded-md w-[200px] mx-auto' type="submit">Create Account</button>
         <span className='text-gray-400 text-sm text-center mt-2 mx-auto'>Already have an account? 
             <Link to='/login' className='ms-1 text-[#1B365D]'>
                 Log in
@@ -126,10 +125,10 @@ return (
         </span>
         <p className="mx-auto text-gray-400 font-semibold mt-6 mb-4">- OR -</p>
         <section className="flex gap-3 mx-auto">
-            <button className="border border-gray-400 p-2 rounded-lg text-gray-400 text-sm flex items-center">
-                <FcGoogle className="text-2xl" />Sign up with Google</button>
-            <button className="border border-gray-400 p-2 rounded-lg text-gray-400 text-sm flex items-center">
-                <AiFillGithub className="text-2xl" />Sign up with GitHub</button>
+            <span className="border border-gray-400 p-2 rounded-lg text-gray-400 text-sm flex items-center">
+                <FcGoogle className="text-2xl" />Sign up with Google</span>
+            <span className="border border-gray-400 p-2 rounded-lg text-gray-400 text-sm flex items-center">
+                <AiFillGithub className="text-2xl" />Sign up with GitHub</span>
         </section>
     </form>
     </main>

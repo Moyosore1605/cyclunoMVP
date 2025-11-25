@@ -1,0 +1,96 @@
+import Logo from '../assets/Logo.svg'
+import { Outlet } from 'react-router-dom';
+import { IoSettingsOutline, IoNotifications, IoHome  } from "react-icons/io5";
+import { MdUpload } from "react-icons/md";
+import { FaUser,FaBug, FaSearch } from "react-icons/fa";
+import { GiBackwardTime } from "react-icons/gi";
+import { PiWarningOctagonFill, PiSignOut } from "react-icons/pi";
+import React, {useContext, useEffect} from 'react'
+import { AuthContext } from '../context/AuthContext';
+import {Link, useNavigate } from "react-router-dom";
+
+export default function DashboardLayout() {
+    const { user, logout } = useContext(AuthContext);
+    const navigate = useNavigate();
+    const userEmail = user?.user?.email;
+    const extractUsername = (email) => {
+    if (!email || typeof email !== 'string') {
+    return 'User'; // Default name if email is missing
+    }
+  // Find the index of the '@' symbol
+    const atIndex = email.indexOf('@');
+
+  // If '@' is found, return the substring before it
+    if (atIndex !== -1) {
+    return email.substring(0, atIndex);
+    }
+
+  // If no '@' is found, return the original string
+return email; 
+};
+const username = extractUsername(userEmail);
+    
+    
+
+    const handleLogout = async (e) => {
+        e.preventDefault();
+        try {
+            const res = await logout();
+            navigate("/login");
+
+        } catch (error) {
+            
+        }}
+return(
+    <main className='flex h-full'>
+        <div className='border-2 border-r-blue-200 w-[240px] h-screen flex flex-col justify-start'>
+            <section className='p-5 pt-3 ps-7 flex items-center gap-1'>
+                <img src={Logo} className='h-12'/>
+                <h1 className='font-bold text-base text-[#1B365D]'>Cycluno</h1>
+            </section>
+            <section className='mt-10 p-7 flex flex-col gap-5 text-gray-500 border-b-2 border-b-blue-200 w-full'>
+                <p className='flex items-center gap-2 text-[#1b365d]'> <IoHome className='text-lg' />Dashboard </p>
+                <p className='flex items-center gap-2'> <MdUpload className='text-lg'/> Test Cases</p>
+                <p className='flex items-center gap-2'> <GiBackwardTime className='text-lg' /> Execution Runs</p>
+                <p className='flex items-center gap-2'> <FaUser className='text-lg'/> Teamwork</p>
+                <p className='flex items-center gap-2'> <PiWarningOctagonFill className='text-lg'/> Reports</p>
+                <p className='flex items-center gap-2'> <FaBug className='text-lg'/> Bugbed</p>
+            </section>
+            <section className='p-7'>
+                <h1 className='mb-24 text-[#1B365D] font-semibold'>Projects</h1>
+                <div className='text-gray-500'>
+                    <section className='flex items-center'>
+                        <p className='w-5 h-5 rounded-full bg-blue-400'/>
+                        <div className='ms-2'>
+                            <h1 className='text-[#1d1c1c]'>{userEmail}</h1>
+                            <p className='text-sm'>QA lead</p>
+                        </div>
+                    </section>
+                    <p className='mt-6 flex items-center gap-3'> <IoSettingsOutline className='text-lg'/> Preferences</p>
+                    <form onSubmit={handleLogout} action="submit" className='flex items-center gap-3 mt-4 mb-4'>
+                        <PiSignOut className='text-lg'/>
+                        <button className='text-[16px]' type='submit'>Sign Out</button>
+                    </form>
+                </div>
+            </section>
+        </div>
+        <div className='w-full'>
+            <section className='flex justify-between items-center p-3 border border-b-blue-200'>
+                <p className='font-poppins text-gray-400 font-light text-xl'>Design,Execute and Report</p>
+                <div className='flex gap-3 items-center'>
+                    <div className='relative'>
+                    <input placeholder='Search for something' className='p-2 bg-gray-200 rounded-3xl w-[400px] text-center'/>
+                    <FaSearch className='absolute top-3 left-24 text-gray-400'/>
+                    </div>
+                    <IoSettingsOutline className='w-8 h-8 text-xl p-2 rounded-full bg-gray-300' />
+                    <IoNotifications className='w-8 h-8 text-xl p-2 rounded-full bg-gray-300' />
+                    <p className='w-8 h-8 rounded-full bg-blue-300'/>
+                </div>
+            </section>
+            <div className='p-9'>
+                <Outlet/>
+            </div>
+        </div>
+    </main>
+)
+}

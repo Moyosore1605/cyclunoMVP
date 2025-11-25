@@ -19,8 +19,7 @@ export default function Landing() {
                     <section>
                         <p className='text-gray-400 mb-3'>Cycluno provides a single, structured workflow to manage every phase <br/>
                         from idea to deployment with traceability and real-time reporting.</p>
-                        <button className='p-2 ps-4 pe-4 bg-[#1B365D] text-white text-base rounded-md'>Request Demo</button>
-                        <button className='p-2 ps-4 pe-4 bg-[#C4C4C4] text-[#666666] text-base rounded-md ms-4'>Ask a question</button>
+                        <Link to='/signup' className='p-2 ps-4 pe-4 bg-[#1B365D] text-white text-base rounded-md w-[200px]'>Get Started</Link>
                     </section>
                     <img src={Vector} width={'103px'} className='absolute right-96'/>
                 </section>

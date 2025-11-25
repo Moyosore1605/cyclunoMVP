@@ -15,7 +15,7 @@ export default function LandingLayout() {
                     <Link to="/">Services</Link>
                     <Link to="/">Features</Link>
                     <Link to="/">About</Link>
-                    <Link to="/signup" className='p-2 ps-4 pe-4 bg-[#1B365D] text-white text-base rounded-md'>Get Started</Link>
+                    <Link to="/login" className='p-2 ps-4 pe-4 bg-[#1B365D] text-white text-base rounded-md'>Log In</Link>
                 </div>
             </div>
                 <Outlet />
