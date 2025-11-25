@@ -3,7 +3,7 @@ import { AuthProvider } from "./context/AuthContext";
 import { ToastContainer } from "react-toastify";
 import Signup from "./pages/auth/Signup.jsx";
 import Login from "./pages/auth/Login.jsx";
-import Dashboard from "./pages/dashboard/dashboard.jsx";
+import Dashboard from "./pages/dashboard/Dashboard.jsx"
 import ProtectedRoute from "./components/ProtectedRoute";
 import PublicLayout from "./layouts/PublicLayout.jsx";
 import LandingLayout from "./layouts/LandingLayout.jsx";
