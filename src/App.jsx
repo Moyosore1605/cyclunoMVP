@@ -3,7 +3,7 @@ import { AuthProvider } from "./context/AuthContext";
 import { ToastContainer } from "react-toastify";
 import Signup from "./pages/auth/Signup.jsx";
 import Login from "./pages/auth/Login.jsx";
-import Dashboard from "./pages/dashboard/Dashboard";
+import Dashboard from "./pages/dashboard/dashboard.jsx";
 import ProtectedRoute from "./components/ProtectedRoute";
 import PublicLayout from "./layouts/PublicLayout.jsx";
 import LandingLayout from "./layouts/LandingLayout.jsx";
@@ -13,6 +13,7 @@ import EmailVerify from "./pages/auth/EmailVerify.jsx";
 import VerificationTester from "./pages/auth/VerificationTester.jsx";
 import DashboardLayout from "./layouts/DashboardLayout.jsx";
 import CreateProduct from "./pages/product/CreateProduct.jsx";
+import Product from "./pages/product/Product.jsx";
 
 export default function App() {
   return (
@@ -30,7 +31,7 @@ export default function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/forgotpassword" element={<ForgotPassword />} />
             <Route path="/emailverify" element={<EmailVerify />} />
-            <Route path="/dev-verify" element={<VerificationTester/>} />
+            {/* <Route path="/dev-verify" element={<VerificationTester/>} /> */}
           </Route>
 
           {/* Protected Pages */}
@@ -42,6 +43,7 @@ export default function App() {
               }
               />
               <Route path="/createproduct" element={<CreateProduct/>}/>
+              <Route path="/product" element={<Product/>} />
           </Route>
           
 

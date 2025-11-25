@@ -1,6 +1,5 @@
 import React, {useContext} from 'react'
 import { AuthContext } from "../../context/AuthContext";
-// import {Link, useNavigate } from "react-router-dom";
 import { RiBox3Line } from "react-icons/ri";
 import { IoSettingsOutline, IoAddCircleOutline } from "react-icons/io5";
 import { VscBeaker } from "react-icons/vsc";
@@ -10,27 +9,26 @@ import {Link, useNavigate} from 'react-router-dom'
 
 
 export default function Dashboard() {
-    const { user, logout } = useContext(AuthContext);
+    const { user, } = useContext(AuthContext);
     const navigate = useNavigate();
+    const userName = user?.email;
 
-
-    const userEmail = user?.user?.email;
     const extractUsername = (email) => {
     if (!email || typeof email !== 'string') {
     return 'User'; // Default name if email is missing
     }
-  // Find the index of the '@' symbol
+    // Find the index of the '@' symbol
     const atIndex = email.indexOf('@');
-
-  // If '@' is found, return the substring before it
+    // If '@' is found, return the substring before it
     if (atIndex !== -1) {
     return email.substring(0, atIndex);
     }
+    };
+    const username = extractUsername(userName);
 
-  // If no '@' is found, return the original string
-return email; 
-};
-const username = extractUsername(userEmail);
+
+    // const userEmail = user?.user?.email;
+// const username = extractUsername(userEmail);
 
     return (
         <main>

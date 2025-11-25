@@ -44,7 +44,7 @@ export default function Signup() {
             const newUser = res.data?.data || res.data;
             if (newUser) loginUser(newUser);
             toast.success("Signup Successful, check your email for verification link!");
-            navigate("/login");
+            navigate("/emailverify");
         } catch (error) {
             // extract axios/server error safely
             const errMsg =

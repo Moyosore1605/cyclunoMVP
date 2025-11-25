@@ -2,6 +2,8 @@ import { createContext, useState, useEffect } from "react";
 import { login as loginAPI, signup as signupAPI, logout as logoutAPI } from "../api/auth";
 
 export const AuthContext = createContext();
+export let isAppInitialized = false;
+
 
 export function AuthProvider({ children }) {
     const [user, setUser] = useState(null);
@@ -16,12 +18,13 @@ export function AuthProvider({ children }) {
         }
         // setLoading(false);
         setInitializing(false);
+        isAppInitialized = true;
     }, []);
 
     const loginUser = (userData) => {
         setUser(userData);
         localStorage.setItem("cyclunoUser", JSON.stringify(userData));
-        console.log("Saved to localStorage:", JSON.parse(localStorage.getItem("cyclunoUser")));
+        // console.log("Saved to localStorage:", JSON.parse(localStorage.getItem("cyclunoUser")));
     };
 
     const login = async (credentials) => {

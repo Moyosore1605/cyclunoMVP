@@ -12,30 +12,27 @@ import {Link, useNavigate } from "react-router-dom";
 export default function DashboardLayout() {
     const { user, logout } = useContext(AuthContext);
     const navigate = useNavigate();
-    const userEmail = user?.user?.email;
+    const userName = user?.email;
+
     const extractUsername = (email) => {
     if (!email || typeof email !== 'string') {
     return 'User'; // Default name if email is missing
     }
-  // Find the index of the '@' symbol
+    // Find the index of the '@' symbol
     const atIndex = email.indexOf('@');
-
-  // If '@' is found, return the substring before it
+    // If '@' is found, return the substring before it
     if (atIndex !== -1) {
     return email.substring(0, atIndex);
     }
-
-  // If no '@' is found, return the original string
-return email; 
-};
-const username = extractUsername(userEmail);
+    };
+    const username = extractUsername(userName);
     
     
 
     const handleLogout = async (e) => {
         e.preventDefault();
         try {
-            const res = await logout();
+            await logout();
             navigate("/login");
 
         } catch (error) {
@@ -43,7 +40,7 @@ const username = extractUsername(userEmail);
         }}
 return(
     <main className='flex h-full'>
-        <div className='border-2 border-r-blue-200 w-[240px] h-screen flex flex-col justify-start'>
+        <div className='border-2 border-r-blue-200 w-[270px] h-screen flex flex-col justify-start'>
             <section className='p-5 pt-3 ps-7 flex items-center gap-1'>
                 <img src={Logo} className='h-12'/>
                 <h1 className='font-bold text-base text-[#1B365D]'>Cycluno</h1>
@@ -60,31 +57,31 @@ return(
                 <h1 className='mb-24 text-[#1B365D] font-semibold'>Projects</h1>
                 <div className='text-gray-500'>
                     <section className='flex items-center'>
-                        <p className='w-5 h-5 rounded-full bg-blue-400'/>
+                        <FaUser className='w-8 h-8 rounded-full p-2 bg-gray-200'/>
                         <div className='ms-2'>
-                            <h1 className='text-[#1d1c1c]'>{userEmail}</h1>
+                            <h1 className='text-[#1d1c1c]'>{username}</h1>
                             <p className='text-sm'>QA lead</p>
                         </div>
                     </section>
                     <p className='mt-6 flex items-center gap-3'> <IoSettingsOutline className='text-lg'/> Preferences</p>
-                    <form onSubmit={handleLogout} action="submit" className='flex items-center gap-3 mt-4 mb-4'>
+                    <form action="submit" className='flex items-center gap-3 mt-4 mb-4'>
                         <PiSignOut className='text-lg'/>
-                        <button className='text-[16px]' type='submit'>Sign Out</button>
+                        <button className='text-[16px]' onClick={handleLogout} type='submit'>Sign Out</button>
                     </form>
                 </div>
             </section>
         </div>
         <div className='w-full'>
             <section className='flex justify-between items-center p-3 border border-b-blue-200'>
-                <p className='font-poppins text-gray-400 font-light text-xl'>Design,Execute and Report</p>
+                <p className='font-poppins text-gray-400 font-light text-xl'>Design, Execute and Report</p>
                 <div className='flex gap-3 items-center'>
                     <div className='relative'>
                     <input placeholder='Search for something' className='p-2 bg-gray-200 rounded-3xl w-[400px] text-center'/>
-                    <FaSearch className='absolute top-3 left-24 text-gray-400'/>
+                    <FaSearch className='absolute top-3 left-[88px] text-gray-400'/>
                     </div>
                     <IoSettingsOutline className='w-8 h-8 text-xl p-2 rounded-full bg-gray-300' />
                     <IoNotifications className='w-8 h-8 text-xl p-2 rounded-full bg-gray-300' />
-                    <p className='w-8 h-8 rounded-full bg-blue-300'/>
+                    <FaUser className='w-8 h-8 rounded-full p-2 bg-gray-200'/>
                 </div>
             </section>
             <div className='p-9'>
