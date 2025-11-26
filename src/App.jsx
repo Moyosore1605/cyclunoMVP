@@ -43,7 +43,7 @@ export default function App() {
               }
               />
               <Route path="/createproduct" element={<CreateProduct/>}/>
-              <Route path="/product" element={<Product/>} />
+              <Route path="/products" element={<Product/>} />
           </Route>
           
 

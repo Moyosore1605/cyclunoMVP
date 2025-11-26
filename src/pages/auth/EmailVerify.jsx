@@ -46,7 +46,7 @@ export default function EmailVerify() {
         const otpCode = otpValues.join('');
 
         if (otpCode.length !== otpValues.length) {
-             setLoading(false);
+            setLoading(false);
             return toast.error("Please enter the full 4-digit OTP.");
         }
 

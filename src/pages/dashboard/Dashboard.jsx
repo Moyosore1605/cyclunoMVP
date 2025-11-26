@@ -11,7 +11,10 @@ import {Link, useNavigate} from 'react-router-dom'
 export default function Dashboard() {
     const { user, } = useContext(AuthContext);
     const navigate = useNavigate();
-    const userName = user?.email;
+    // const userName = user?.email;
+    const profile = user?.user; 
+    // 2. Extract properties from the profile object
+    const userName = profile?.email || '';
 
     const extractUsername = (email) => {
     if (!email || typeof email !== 'string') {

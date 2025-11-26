@@ -30,7 +30,7 @@ export default function Login() {
 
         try {
             const res = await login({ email, password });
-            console.log("Login response1:", res);
+            // console.log("Login response1:", res);
 
             if (!res || !res.success) {
                 // normalize message to string
@@ -41,32 +41,33 @@ export default function Login() {
                 return;
             }
 
-            const payload = res?.data;
-            let newUser = null;
-            if (payload && typeof payload === "object") {
-                newUser = payload?.data ?? payload?.user ?? payload;
-            } else if (typeof payload === "string") {
-                newUser = { email: payload };
-            }
-            console.log("newUser after login (normalized):", newUser);
-            if (newUser && typeof loginUser === "function") {
-                loginUser(newUser);
+            const payload = res?.data?.result || res?.data;
+            // let newUser = null;
+            // if (payload && typeof payload === "object") {
+            //     newUser = payload?.data ?? payload?.user ?? payload;
+            // } else if (typeof payload === "string") {
+            //     newUser = { email: payload };
+            // }
+            // // console.log("newUser after login (normalized):", newUser);
+            // if (newUser && typeof loginUser === "function") {
+            //     loginUser(newUser);
+            //     toast.success("Login Successful");
+            //     navigate("/dashboard");
+            // } else {
+            //     // backend returned no usable profile; still inform user
+            //     toast.error("Login succeeded but no profile returned");
+            // }
+
+            if (payload && typeof payload === "object" && payload.access) {
+                // Pass the full payload (with 'access' key) to AuthContext
+                loginUser(payload); 
                 toast.success("Login Successful");
                 navigate("/dashboard");
             } else {
-                // backend returned no usable profile; still inform user
-                toast.error("Login succeeded but no profile returned");
+                // backend returned no usable profile OR no tokens; inform user
+                toast.error("Login succeeded but failed to retrieve user tokens/profile.");
             }
 
-            // const newUser = res.data?.data || res.data;
-            // console.log("newUser after login:", newUser);
-            // // if (newUser) loginUser(newUser);
-            // if (newUser && typeof loginUser === "function"){
-            //     loginUser(newUser);
-            //     justLoggedIn.current = true;
-            //     navigate("/dashboard");
-            // }
-            // toast.success("Login Successful");
             } catch (error) {
                 // extract axios/server error safely
                 const errMsg =
@@ -79,13 +80,6 @@ export default function Login() {
             } finally{
                 setLoading(false);
             }
-
-        // if (!res.success) {
-        // toast.error(res.message || "Login Failed");
-        // return;
-        // }
-        // toast.success("Login Successful");
-        // navigate("/dashboard");
     };
     if (loading) {
         return <Spinner />;

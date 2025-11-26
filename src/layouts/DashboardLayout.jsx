@@ -12,7 +12,13 @@ import {Link, useNavigate } from "react-router-dom";
 export default function DashboardLayout() {
     const { user, logout } = useContext(AuthContext);
     const navigate = useNavigate();
-    const userName = user?.email;
+    // const userName = user?.email;
+
+
+    const profile = user?.user; 
+    
+    // 2. Extract properties from the profile object
+    const userName = profile?.email || ''; 
 
     const extractUsername = (email) => {
     if (!email || typeof email !== 'string') {
@@ -60,7 +66,7 @@ return(
                         <FaUser className='w-8 h-8 rounded-full p-2 bg-gray-200'/>
                         <div className='ms-2'>
                             <h1 className='text-[#1d1c1c]'>{username}</h1>
-                            <p className='text-sm'>QA lead</p>
+                            <p className='text-sm'>QA Tester</p>
                         </div>
                     </section>
                     <p className='mt-6 flex items-center gap-3'> <IoSettingsOutline className='text-lg'/> Preferences</p>

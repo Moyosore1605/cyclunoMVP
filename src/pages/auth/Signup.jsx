@@ -31,7 +31,7 @@ export default function Signup() {
         }
         try {
             const res = await signup(form);
-            console.log("signup response1:", res);
+            // console.log("signup response1:", res);
 
             if (!res || !res.success) {
                 // normalize message to string
@@ -53,7 +53,7 @@ export default function Signup() {
                 error?.message ||
                 "Something went wrong during signup";
             toast.error(typeof errMsg === "string" ? errMsg : JSON.stringify(errMsg));
-            console.error("signup error:", error);
+            // console.error("signup error:", error);
         } finally{
             setLoading(false);
         }

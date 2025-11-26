@@ -29,6 +29,7 @@ export default function CreateProduct() {
     setLoading(true);
     try {
         const res = await createProduct(form);
+        localStorage.setItem("product", JSON.stringify(res.data));
         console.log('create product response',res);
         toast.success("Product created");
       navigate("/products"); // adjust route to your product list/detail
